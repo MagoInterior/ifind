@@ -1,0 +1,28 @@
+const fs = require('fs');
+
+n1 = ['1','2','3','4','5','6','7','8','9', '10']
+n2 = ['1','2','3','4','5','6','7','8','9', '10'] 
+let nivel1 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel2 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel3 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel4 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel5 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel6 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel7 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel8 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel9 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel10 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel11 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel12 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel13 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel14 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel15 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel16 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel17 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel18 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel19 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel20 = n2[Math.floor(Math.random() * (n2.length))] 
+let nivel21 = n1[Math.floor(Math.random() * (n1.length))]
+let nivel22 = n2[Math.floor(Math.random() * (n2.length))] 
+
+module.exports = { nivel1, nivel2, nivel3, nivel4, nivel5, nivel6, nivel7, nivel8, nivel9, nivel10, nivel11, nivel12, nivel13, nivel14, nivel15, nivel16, nivel17, nivel18, nivel19, nivel20, nivel21, nivel22 }
