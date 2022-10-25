@@ -1,4 +1,4 @@
-const { 
+const { //kkk
 default: WAConnection,
 MessageType,
 Presence,
@@ -100,13 +100,13 @@ const store = makeInMemoryStore({ logger: P().child({ level: "debug", stream: "s
 const { state, saveState } = useSingleFileAuthState("./qrcode.json")
 console.log(banner.string)
 const lz = WAConnection({
-    logger: P({ level: 'silent' }),
-    printQRInTerminal: true,
-    auth: state,
-    msgRetryCounterMap: MessageRetryMap,
-    defaultQueryTimeoutMs: undefined, 
-    keepAliveIntervalMs: 1000 * 60 * 10 * 3
-    })
+logger: P({ level: 'silent' }),
+printQRInTerminal: true,
+auth: state,
+msgRetryCounterMap: MessageRetryMap,
+defaultQueryTimeoutMs: undefined, 
+keepAliveIntervalMs: 1000 * 60 * 10 * 3
+})
 
 lz.ev.on ("creds.update", saveState)
 store.bind(lz.ev)
@@ -249,9 +249,13 @@ Dados Reais e Atualizados Diretamente De Bases Oficiais!
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}cpf3 27867260854
 ━━━━━━━━━━━━━━━━━━
+[+] ${prefix}cpf4 27867260854
+━━━━━━━━━━━━━━━━━━
 [+] ${prefix}telefone 21971268721
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}cnpj 27865757000102
+━━━━━━━━━━━━━━━━━━
+[+] ${prefix}cnpj2 27865757000102
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}cep 75255681
 ━━━━━━━━━━━━━━━━━━
@@ -469,6 +473,71 @@ switch (command) {
 
 // ====== || Menus || ====== \\
 
+case 'usuarios-api':
+if (!isOwner2) return reply("comando apenas pro meu dono")
+getUsersOfSystm = await fetchJson("https://ifenix-api.tk/admin/listadeusuarios")
+let infoUsers = `┌ ◪ *[+] iFenix - Rest Api's [+]*
+└ *Total De Usuarios:* ${getUsersOfSystm.info.length}\n\n`
+for(var i = 0; i < getUsersOfSystm.info.length; i++) {
+    infoUsers += `───────────────\n
+┌ ❏ *Nome De Usuario:* ${getUsersOfSystm.info[i].nome}
+ ❏ *Token:* ${getUsersOfSystm.info[i].token}
+└ ❏ *Limit Do Token:* ${getUsersOfSystm.info[i].limit}\n\n`
+}
+reply(infoUsers)
+break
+
+case 'adduser-api':
+try {
+if (!isOwner2) return reply("comando apenas pro meu dono")
+textin = args.join(" ")
+txt1 = textin.split("/")[0];
+txt2 = textin.split("/")[1];
+txt3 = textin.split("/")[2];
+if (!textin) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
+if (!txt1) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
+if (!txt2) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
+if (!txt3) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
+createUser = await fetchJson(`https://ifenix-api.tk/admin/adduser?nomeuser=${txt1}&tokenuser=${txt2}&limituser=${txt3}`)
+reply("USUARIO ADICIONADO AO BANCO DE DADOS COM SUCESSO!")
+getUsersOfSystm = await fetchJson("https://ifenix-api.tk/admin/listadeusuarios")
+let infoUsers = `┌ ◪ *[+] iFenix - Rest Api's [+]*
+└ *Total De Usuarios:* ${getUsersOfSystm.info.length}\n\n`
+for(var i = 0; i < getUsersOfSystm.info.length; i++) {
+infoUsers += `───────────────\n
+┌ ❏ *Nome De Usuario:* ${getUsersOfSystm.info[i].nome}
+ ❏ *Token:* ${getUsersOfSystm.info[i].token}
+└ ❏ *Limit Do Token:* ${getUsersOfSystm.info[i].limit}\n\n`
+}
+reply(infoUsers)
+} catch(err) {
+console.log(err)
+reply("erro no servidor.")
+}
+break
+
+case 'deluser-api':
+try {
+if (!isOwner2) return reply("comando apenas pro meu dono")
+if (!q) return reply(`formato: ${prefix+command} nomedotoken`)
+deleteUser = await fetchJson(`https://ifenix-api.tk/admin/deluser?tokenuser=${q}`)
+reply("USUARIO DELETADO DO BANCO DE DADOS COM SUCESSO!")
+getUsersOfSystm = await fetchJson("https://ifenix-api.tk/admin/listadeusuarios")
+let infoUsers = `┌ ◪ *[+] iFenix - Rest Api's [+]*
+└ *Total De Usuarios:* ${getUsersOfSystm.info.length}\n\n`
+for(var i = 0; i < getUsersOfSystm.info.length; i++) {
+infoUsers += `───────────────\n
+┌ ❏ *Nome De Usuario:* ${getUsersOfSystm.info[i].nome}
+ ❏ *Token:* ${getUsersOfSystm.info[i].token}
+└ ❏ *Limit Do Token:* ${getUsersOfSystm.info[i].limit}\n\n`
+}
+reply(infoUsers)
+} catch(err) {
+console.log(err)
+reply("erro no servidor.")
+}
+break
+
 case 'cs':
 textin = args.join(" ")
 txt1 = textin.split("/")[0];
@@ -486,7 +555,7 @@ isPremium: isprem,
 system: txt1,
 motivo: txt2
 }
-fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`, JSON.stringify(ajs, null, 2))
+fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`, JSON.stringify(ajs, null, 2))
 reply("ok")
 break
 
@@ -502,12 +571,12 @@ CepDoAlvo = args.join(" ")
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o score: ${CepDoAlvo}`)
+console.log(`~> Consultando o cep: ${CepDoAlvo}`)
 if (!CepDoAlvo) return reply(`exemplo: ${prefix+command} 02704534314`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${CepDoAlvo}&token=lzprivate_key`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${CepDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCep = `
 ${getResultsOfApi.resultado.dados}
@@ -522,8 +591,7 @@ console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -531,7 +599,7 @@ ${NomeDoBot}
 }
 break
 
-case 'cpf3':
+case 'score':
 if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
@@ -545,10 +613,10 @@ CpfDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o score: ${CpfDoAlvo}`)
 if (!CpfDoAlvo) return reply(`exemplo: ${prefix+command} 02704534314`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${CpfDoAlvo}&token=lzprivate_key`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/score?query=${CpfDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoConsultaDeScore)
 let DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -563,8 +631,7 @@ console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -572,13 +639,11 @@ ${NomeDoBot}
 }
 break
 
-case 'cpf':
-case 'cpf1':
+case 'cpf4':
 if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...`)
 CpfDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -588,10 +653,10 @@ CpfDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o cpf: ${CpfDoAlvo}`)
 if (!CpfDoAlvo) return reply(`exemplo: ${prefix+command} 02704534314`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=lzprivate_key`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf5?query=${CpfDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -606,8 +671,48 @@ console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
+Motivo: ${infoOfUser.motivo}
+
+${NomeDoBot}
+`)
+}
+break
+
+case 'cpf3':
+if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
+
+Entre No Grupo Do Bot Para Usar:
+https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+CpfDoAlvo = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o score: ${CpfDoAlvo}`)
+if (!CpfDoAlvo) return reply(`exemplo: ${prefix+command} 02704534314`)
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
+if (infoOfUser.system == "online") {
+try {
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf4?query=${CpfDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoconsultas)
+let DadosOfCpf = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
+} catch(err) {
+console.log(err)
+reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
+}
+} else {
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -620,7 +725,7 @@ if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 CpfDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -628,13 +733,13 @@ CpfDoAlvo = args.join(" ")
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o cpf: ${CpfDoAlvo}`)
+console.log(`~> Consultando o score: ${CpfDoAlvo}`)
 if (!CpfDoAlvo) return reply(`exemplo: ${prefix+command} 02704534314`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf2?query=${CpfDoAlvo}&token=lzprivate_key`)
-imageCS = await getBuffer(fotoconsultas)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${CpfDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoConsultaDeScore)
 let DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
 
@@ -648,8 +753,58 @@ console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
+Motivo: ${infoOfUser.motivo}
+
+${NomeDoBot}
+`)
+}
+break
+
+case 'cpf':
+case 'cpf1':
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
+if (infoOfUser.system == "online") {
+if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
+
+Entre No Grupo Do Bot Para Usar:
+https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+CpfDoAlvo = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o cpf: ${CpfDoAlvo}`)
+if (!CpfDoAlvo) return reply(`exemplo: ${prefix+command} 02704534314`)
+try {
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoconsultas)
+DadosOfCpf = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
+} catch(err) {
+console.log(err)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoconsultas)
+DadosOfCpf = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
+}
+} else {
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -662,7 +817,7 @@ if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 NomeDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -671,12 +826,12 @@ NomeDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o nome: ${NomeDoAlvo}`)
 if (!NomeDoAlvo) return reply(`exemplo: ${prefix+command} JADSON CLAUDIO MARTINS DE SOUZA`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=lzprivate_key`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoconsultas)
-let DadosOfName = `
+DadosOfName = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
@@ -686,11 +841,19 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfName}, {quoted: info})
 } catch(err) {
 console.log(err)
-reply(`⚠️ NOME NÃO ENCONTRADO / INVALIDO!`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoconsultas)
+DadosOfName = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: DadosOfName}, {quoted: info})
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -705,7 +868,7 @@ if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 NumeroDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -713,14 +876,14 @@ NumeroDoAlvo = args.join(" ")
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o nome: ${NumeroDoAlvo}`)
+console.log(`~> Consultando o telefone: ${NumeroDoAlvo}`)
 if (!NumeroDoAlvo) return reply(`exemplo: ${prefix+command} JADSON CLAUDIO MARTINS DE SOUZA`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${NumeroDoAlvo}&token=lzprivate_key`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${NumeroDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoconsultas)
-let DadosOfNumero = `
+DadosOfNumero = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
@@ -730,11 +893,19 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
 } catch(err) {
 console.log(err)
-reply(`⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell2?query=${NumeroDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoconsultas)
+DadosOfNumero = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -747,7 +918,7 @@ if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 PlacaDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -755,14 +926,14 @@ PlacaDoAlvo = args.join(" ")
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o nome: ${PlacaDoAlvo}`)
+console.log(`~> Consultando a placa: ${PlacaDoAlvo}`)
 if (!PlacaDoAlvo) return reply(`exemplo: ${prefix+command} NND1379`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${PlacaDoAlvo}&token=lzprivate_key`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${PlacaDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoconsultas)
-let DadosOfPlaca = `
+DadosOfPlaca = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
@@ -772,11 +943,19 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfPlaca}, {quoted: info})
 } catch(err) {
 console.log(err)
-reply(`⚠️ PLACA NÃO ENCONTRADA / INVALIDO!`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa2?query=${PlacaDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoconsultas)
+DadosOfPlaca = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: DadosOfPlaca}, {quoted: info})
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -789,7 +968,7 @@ if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 CnpjDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -798,12 +977,12 @@ CnpjDoAlvo = args.join(" ")
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o nome: ${CnpjDoAlvo}`)
+console.log(`~> Consultando o cnpj: ${CnpjDoAlvo}`)
 if (!CnpjDoAlvo) return reply(`exemplo: ${prefix+command} 27.865.757/0001-02`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${CnpjDoAlvo}&token=lzprivate_key`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${CnpjDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCnpj = `
 ${getResultsOfApi.resultado.dados}
@@ -818,8 +997,49 @@ console.log(err)
 reply(`⚠️ CNPJ NÃO ENCONTRADO / INVALIDO!`)
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
+Motivo: ${infoOfUser.motivo}
+
+${NomeDoBot}
+`)
+}
+break
+
+case 'cnpj2':
+if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
+
+Entre No Grupo Do Bot Para Usar:
+https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+CnpjDoAlvo = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('/').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o cnpj: ${CnpjDoAlvo}`)
+if (!CnpjDoAlvo) return reply(`exemplo: ${prefix+command} 27.865.757/0001-02`)
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
+if (infoOfUser.system == "online") {
+try {
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj2?query=${CnpjDoAlvo}&token=ifenix_trial_bylzmods`)
+imageCS = await getBuffer(fotoconsultas)
+let DadosOfCnpj = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: DadosOfCnpj}, {quoted: info})
+} catch(err) {
+console.log(err)
+reply(`⚠️ CNPJ NÃO ENCONTRADO / INVALIDO!`)
+}
+} else {
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
@@ -832,7 +1052,7 @@ if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 BinDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -841,12 +1061,12 @@ BinDoAlvo = args.join(" ")
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o nome: ${BinDoAlvo}`)
+console.log(`~> Consultando a bin: ${BinDoAlvo}`)
 if (!BinDoAlvo) return reply(`exemplo: ${prefix+command} 498408`)
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas-${sender}.json`))
+infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
 if (infoOfUser.system == "online") {
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${BinDoAlvo}&token=lzprivate_key`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${BinDoAlvo}&token=ifenix_trial_bylzmods`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfBin = `
 ${getResultsOfApi.resultado.dados}
@@ -861,8 +1081,7 @@ console.log(err)
 reply(`⚠️ BIN NÃO ENCONTRADA / INVALIDO!`)
 }
 } else {
-reply("CONSULTAS OFFLINE")
-reply(`
+reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
 
 ${NomeDoBot}
