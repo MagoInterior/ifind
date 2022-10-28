@@ -576,7 +576,7 @@ CepDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o cep: ${CepDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${CepDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${CepDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCep = `
 ${getResultsOfApi.resultado.dados}
@@ -616,7 +616,7 @@ CpfDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o score: ${CpfDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/score?query=${CpfDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/score?query=${CpfDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoConsultaDeScore)
 let DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -656,7 +656,7 @@ CpfDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o cpf: ${CpfDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf5?query=${CpfDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf5?query=${CpfDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -697,7 +697,7 @@ CpfDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o score: ${CpfDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf4?query=${CpfDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf4?query=${CpfDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -738,7 +738,7 @@ CpfDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o score: ${CpfDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${CpfDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${CpfDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoConsultaDeScore)
 let DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -780,7 +780,7 @@ CpfDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o cpf: ${CpfDoAlvo}`)
 try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -792,7 +792,7 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
 } catch(err) {
 console.log(err)
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfCpf = `
 ${getResultsOfApi.resultado.dados}
@@ -829,7 +829,7 @@ NomeDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o nome: ${NomeDoAlvo}`)
 try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfName = `
 ${getResultsOfApi.resultado.dados}
@@ -841,7 +841,7 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfName}, {quoted: info})
 } catch(err) {
 console.log(err)
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfName = `
 ${getResultsOfApi.resultado.dados}
@@ -881,7 +881,7 @@ NumeroDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o telefone: ${NumeroDoAlvo}`)
 try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${NumeroDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${NumeroDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfNumero = `
 ${getResultsOfApi.resultado.dados}
@@ -893,7 +893,7 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
 } catch(err) {
 console.log(err)
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell2?query=${NumeroDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell2?query=${NumeroDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfNumero = `
 ${getResultsOfApi.resultado.dados}
@@ -931,7 +931,7 @@ PlacaDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando a placa: ${PlacaDoAlvo}`)
 try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${PlacaDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${PlacaDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfPlaca = `
 ${getResultsOfApi.resultado.dados}
@@ -943,7 +943,7 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfPlaca}, {quoted: info})
 } catch(err) {
 console.log(err)
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa2?query=${PlacaDoAlvo}&token=serpentes`)
+getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa2?query=${PlacaDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfPlaca = `
 ${getResultsOfApi.resultado.dados}
@@ -982,7 +982,7 @@ CnpjDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o cnpj: ${CnpjDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${CnpjDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${CnpjDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCnpj = `
 ${getResultsOfApi.resultado.dados}
@@ -1024,7 +1024,7 @@ CnpjDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o cnpj: ${CnpjDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj2?query=${CnpjDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj2?query=${CnpjDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfCnpj = `
 ${getResultsOfApi.resultado.dados}
@@ -1066,7 +1066,7 @@ BinDoAlvo = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando a bin: ${BinDoAlvo}`)
 try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${BinDoAlvo}&token=serpentes`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${BinDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 let DadosOfBin = `
 ${getResultsOfApi.resultado.dados}
