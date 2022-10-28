@@ -287,7 +287,7 @@ Preço: 350 R$
 
 🩸 - Plano (Tenha o Seu Proprio Site) - 🩸
 
-- a Combinar Com o SEO
+- a Combinar Com o CEO
 
 🩸 - Plano (Adicione o Bot a Um Grupo) - 🩸
 
@@ -311,11 +311,11 @@ Plano: Mensal
 Preço: 80 R$
 
 agradeço a todos pela escolha e pela confiança!
-o SEO (lzmods) Agradece Em Nome De iFenix
+o CEO (lzmods) Agradece Em Nome De iFenix
 
 🛡 - Contato - 🛡
 
-SEO (lzmods)
+CEO (lzmods)
 wa.me/5562991514026
 
 ⚔️ Caso Queira Adiquirir Um De Nossos Planos, Tem Alguma Duvida, Ou Ate Mesmo Reportar Um Bug No Bot Entre Em Contato Imediatamente!! ⚔️
@@ -865,13 +865,17 @@ case 'telefone':
 case 'tell':
 case 'tel':
 infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
+if (q.length < 11 || q.length > 11) {
+reply("o formato do telefone tem que ser de no minimo 11 digitos")
+} else {
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+}
 if (infoOfUser.system == "online") {
 if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
 
 Entre No Grupo Do Bot Para Usar:
 https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
 if (!q) return reply(`exemplo: ${prefix+command} telefonedoalvo`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 NumeroDoAlvo = args.join(" ")
 .split('+').join('')
 .split('-').join('')
@@ -893,6 +897,7 @@ ${NomeDoBot}
 lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
 } catch(err) {
 console.log(err)
+console.log("tentando na api2")
 getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell2?query=${NumeroDoAlvo}&token=spr`)
 imageCS = await getBuffer(fotoconsultas)
 DadosOfNumero = `
@@ -904,6 +909,8 @@ ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
 }
+await sleep(10000)
+return reply(`⚠️ NUMERO NÃO ENCONTRADO / INVALIDO!`)
 } else {
 reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
@@ -911,6 +918,30 @@ Motivo: ${infoOfUser.motivo}
 ${NomeDoBot}
 `)
 }
+break
+
+case 'limpar':
+if(!isGroup) return reply(enviar.msg.grupo)
+if(!isGroupAdmins) return reply(enviar.msg.adm)
+clear = `🗑️\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🗑️\n❲❗❳ *Lɪᴍᴘᴇᴢᴀ ᴅᴇ Cʜᴀᴛ Cᴏɴᴄʟᴜɪ́ᴅᴀ* ✅`
+lz.sendMessage(from, {text: clear}, {quoted: info, contextInfo : { forwardingScore: 500, isForwarded:true}})
+break
+
+case 'totag':
+case 'cita':
+case 'hidetag':
+if(!isGroup) return reply('Este comando só deve ser utilizado em Grupo.')
+if(!isOwner2) return reply('Você precisa ser DONO pra utilizar este comando')
+membros = (groupId, membros1) => {
+array = []
+for (let i = 0; i < membros1.length; i++) {
+array.push(membros1[i].id)
+}
+return array
+}
+var yd = membros(from, groupMembers)
+if(q.length < 1) return reply('Citar oq?')
+lz.sendMessage(from, {text: body.slice(command.length + 2), mentions: yd})
 break
 
 case 'placa':
