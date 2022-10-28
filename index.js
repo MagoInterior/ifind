@@ -909,8 +909,6 @@ ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
 }
-await sleep(10000)
-return reply(`⚠️ NUMERO NÃO ENCONTRADO / INVALIDO!`)
 } else {
 reply(`CONSULTAS OFFLINE
 Motivo: ${infoOfUser.motivo}
