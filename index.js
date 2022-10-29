@@ -274,6 +274,8 @@ Dados Reais e Atualizados Diretamente De Bases Oficiais!
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}telefone 21971268721
 ━━━━━━━━━━━━━━━━━━
+[+] ${prefix}telefone2 21971268721
+━━━━━━━━━━━━━━━━━━
 [+] ${prefix}cnpj 27865757000102
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}cnpj2 27865757000102
@@ -283,6 +285,8 @@ Dados Reais e Atualizados Diretamente De Bases Oficiais!
 [+] ${prefix}nome Tania Mara Moyses
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}placa OGT0458
+━━━━━━━━━━━━━━━━━━
+[+] ${prefix}placa2 OGT0458
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}bin 498408
 ━━━━━━━━━━━━━━━━━
@@ -770,6 +774,8 @@ reply(`⚠️ NOME NÃO ENCONTRADO / INVALIDO!`)
 break
 
 case 'tell':
+case 'telefone':
+case 'tel':
 try {
 infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
@@ -806,6 +812,8 @@ reply(`⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!`)
 break
 
 case 'tell2':
+case 'telefone2':
+case 'tel2':
 try {
 infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
