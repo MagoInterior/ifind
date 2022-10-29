@@ -1100,6 +1100,13 @@ SendButtonIMG(from, fotododono, infodono(prefix, NomeDoDono, NumeroDoDono, NomeD
 {buttonId: `${prefix}menu`, buttonText: {displayText: `🌠 Menu De Comandos 🌠`}, type: 1}], info)
 break
 
+case 'limpar':
+if(!isGroup) return reply("apenas grupos")
+if(!isGroupAdmins) return reply("apenas pra admins")
+clear = `🗑️\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🗑️\n❲❗❳ *Lɪᴍᴘᴇᴢᴀ ᴅᴇ Cʜᴀᴛ Cᴏɴᴄʟᴜɪ́ᴅᴀ* ✅`
+lz.sendMessage(from, {text: clear}, {quoted: info, contextInfo : { forwardingScore: 500, isForwarded:true}})
+break
+
 case "gplink":
 case "linkgp":
 if (!isGroup) return reply("apenas grupos")
@@ -1321,6 +1328,24 @@ await lz.groupLeave(from)
 console.log(e)
 reply(enviar.erro)
 }
+break
+
+case 'totag':
+case 'cita':
+case 'hidetag':
+if(!isGroup) return reply('Este comando só deve ser utilizado em Grupo.')
+if(!isGroupAdmins) return reply('Você precisa ser ADM pra utilizar este comando')
+if(q.includes(`${prefix}`)) return reply("Não pode utilizar comandos nesse comando")
+membros = (groupId, membros1) => {
+array = []
+for (let i = 0; i < membros1.length; i++) {
+array.push(membros1[i].id)
+}
+return array
+}
+var yd = membros(from, groupMembers)
+if(q.length < 1) return reply('Citar oq?')
+conn.sendMessage(from, {text: body.slice(command.length + 2), mentions: yd})
 break
 
 case "rebaixar":
