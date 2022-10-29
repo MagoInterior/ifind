@@ -1345,7 +1345,7 @@ return array
 }
 var yd = membros(from, groupMembers)
 if(q.length < 1) return reply('Citar oq?')
-conn.sendMessage(from, {text: body.slice(command.length + 2), mentions: yd})
+lz.sendMessage(from, {text: body.slice(command.length + 2), mentions: yd})
 break
 
 case "rebaixar":
