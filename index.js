@@ -19,6 +19,7 @@ const fs = require("fs")
 const chalk = require("chalk")
 const P = require("pino") 
 const axios = require('axios')
+const validarCpf = require('cpf-cnpj-validator')
 const clui = require("clui")
 const fetch = require("node-fetch")
 const moment = require("moment-timezone")
@@ -48,8 +49,9 @@ const { banner, banner2, convertSticker, getExtension, getRandom } = require("./
 let fotoConsultaDeCpf = "https://telegra.ph/file/c8bbb2f5456ccfdc91995.jpg"
 let fotoConsultaDeCpf2 = "https://telegra.ph/file/20359c436cb3b3f3f642b.png"
 let fotoConsultaDeScore = "https://telegra.ph/file/1e80e777b4b33789b7602.jpg"
-let fotoconsultas = "https://telegra.ph/file/43e11bb4df8b775589b06.jpg"
+
 let fotododono = "https://telegra.ph/file/1ca3283d208cdbffc9c61.jpg"
+var base64ToImage = require('base64-to-image');
 
 // ====== || Hora & Data || ====== \\
 
@@ -211,6 +213,25 @@ const q = args.join(" ")
 const isUrl = (url) => {
 return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi'))
 }
+
+fts = [
+"https://telegra.ph/file/43e11bb4df8b775589b06.jpg",
+"https://telegra.ph/file/0e9aeae25982d0f1f383d.jpg",
+"https://telegra.ph/file/9f66c688ccc8725557986.jpg",
+"https://telegra.ph/file/4fce7c9f2fe461b079519.jpg",
+"https://telegra.ph/file/42f99ea5da21bcc639137.jpg",
+"https://telegra.ph/file/1c5a51d5154a881871c78.jpg",
+"https://telegra.ph/file/9fdfa080ab26b678588b7.jpg",
+"https://telegra.ph/file/ed5260749a0d46352c240.jpg",
+"https://telegra.ph/file/ab554c3ea77317c6649de.jpg",
+"https://telegra.ph/file/cf4ceed72b8155261a5a8.jpg",
+"https://telegra.ph/file/a0989fc8a929b95b7b3e3.jpg",
+"https://telegra.ph/file/a2304c2d8daa744f5a5ae.jpg",
+"https://telegra.ph/file/2482993fb0ea50da52abf.jpg"
+] 
+const FotosRandomicas_CS = fts[Math.floor(Math.random() * fts.length)]
+
+let ftdobot = "https://telegra.ph/file/5c37fc576961f6b2642cd.jpg"
 
 // ====== || Consts - Grupos || ====== \\
 const sender = isGroup ? info.key.participant : info.key.remoteJid
@@ -538,588 +559,539 @@ reply("erro no servidor.")
 }
 break
 
-case 'cs':
-textin = args.join(" ")
-txt1 = textin.split("/")[0];
-txt2 = textin.split("/")[1];
-if(!textin) return reply("online/offline & motivo")
-const isprem = `${isPremium? 'true' : 'false'}`
-const isow = `${!isOwner? 'true' : 'false'}`
-if (!q) return reply("atv ou dst")
+case 'consultas_config':
 if (!isOwner2) return reply("apenas pro dono")
-ajs = {
-from: from,
-sender: sender,
-pushname: pushname,
-isPremium: isprem,
-system: txt1,
-motivo: txt2
+let foto_csf = "https://telegra.ph/file/328c829f6921cdc720366.jpg"
+let txt = `Escolha Entre As Opçoes Abaixo Para Continuar.`
+SendButtonIMG(from, foto_csf, txt, NomeDoBot, [
+{buttonId: `${prefix}cs_on`, buttonText: {displayText: `❬ ✔ ❭ Ativar Consultas ❬ ✔ ❭`}, type: 1},
+{buttonId: `${prefix}cs_off`, buttonText: {displayText: `❬ X ❭ Desativar Consultas ❬ X ❭`}, type: 1}], info)
+break
+
+case 'cs_off':
+if (!isOwner2) return reply("apenas pro dono")
+let motivo = `Fazendo Manutençoes Ou Desativada Temporariamente.\n\nQuer Consultas Sem Limitaçoes?\nDigite: ${prefix}menu e Adiquira Ja Um PLano!`
+escrever_no_json = {
+system: "offline",
+motivo: motivo
 }
-fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`, JSON.stringify(ajs, null, 2))
+fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`, JSON.stringify(escrever_no_json, null, 2))
 reply("ok")
 break
 
-case 'cep':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-if (!q) return reply(`exemplo: ${prefix+command} cep`)
-CepDoAlvo = args.join(" ")
-.split('+').join('')
-.split('-').join('')
-.split(' ').join('')
-.split('.').join('')
-.split('(').join('')
-.split(')').join('');
-console.log(`~> Consultando o cep: ${CepDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${CepDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-let DadosOfCep = `
-${getResultsOfApi.resultado.dados}
-
-> Usuario: ${pushname}
-
-${NomeDoBot}
-`
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCep}, {quoted: info})
-} catch(err) {
-console.log(err)
-reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
+case 'cs_on':
+if (!isOwner2) return reply("apenas pro dono")
+let mtv = `ON!`
+escrever_no_json = {
+system: "online",
+motivo: mtv
 }
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
-}
+fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`, JSON.stringify(escrever_no_json, null, 2))
+reply("ok")
 break
 
-case 'score':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+case 'cpf':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
+if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
-CpfDoAlvo = args.join(" ")
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o score: ${CpfDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/score?query=${CpfDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoConsultaDeScore)
-let DadosOfCpf = `
+console.log(`~> Consultando o cpf: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
-}
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
 }
 break
 
 case 'cpf4':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
+if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
-CpfDoAlvo = args.join(" ")
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o cpf: ${CpfDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf5?query=${CpfDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-let DadosOfCpf = `
-${getResultsOfApi.resultado.dados}
-
-> Usuario: ${pushname}
-
-${NomeDoBot}
-`
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
-} catch(err) {
-console.log(err)
-reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
-}
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
-}
-break
-
-case 'cpf3':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
+console.log(`~> Consultando o cpf: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-CpfDoAlvo = args.join(" ")
-.split('+').join('')
-.split('-').join('')
-.split(' ').join('')
-.split('.').join('')
-.split('(').join('')
-.split(')').join('');
-console.log(`~> Consultando o score: ${CpfDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf4?query=${CpfDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-let DadosOfCpf = `
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf4?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
-}
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
 }
 break
 
 case 'cpf2':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
+if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-CpfDoAlvo = args.join(" ")
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o score: ${CpfDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${CpfDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoConsultaDeScore)
-let DadosOfCpf = `
+console.log(`~> Consultando o cpf: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf2?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
 }
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
-}
 break
 
-case 'cpf':
-case 'cpf1':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+case 'cpf3':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
+if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-CpfDoAlvo = args.join(" ")
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o cpf: ${CpfDoAlvo}`)
-try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfCpf = `
+console.log(`~> Consultando o cpf: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${CpfDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfCpf = `
-${getResultsOfApi.resultado.dados}
-
-> Usuario: ${pushname}
-
-${NomeDoBot}
-`
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCpf}, {quoted: info})
-}
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
+reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
 }
 break
 
 case 'nome':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 20) return reply(`➥ INSIRA UM NOME COMPLETO.`)
+if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} nomedoalvo`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-NomeDoAlvo = args.join(" ")
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o nome: ${NomeDoAlvo}`)
-try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfName = `
+console.log(`~> Consultando o NOME: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfName}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${NomeDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfName = `
-${getResultsOfApi.resultado.dados}
-
-> Usuario: ${pushname}
-
-${NomeDoBot}
-`
-lz.sendMessage(from, {image: imageCS, caption: DadosOfName}, {quoted: info})
-}
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
+reply(`⚠️ NOME NÃO ENCONTRADO / INVALIDO!`)
 }
 break
 
-case 'telefone':
 case 'tell':
-case 'tel':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (q.length < 11 || q.length > 11) {
-reply("o formato do telefone tem que ser de no minimo 11 digitos")
-} else {
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-}
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-if (!q) return reply(`exemplo: ${prefix+command} telefonedoalvo`)
-NumeroDoAlvo = args.join(" ")
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} numerodoalvo`)
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o telefone: ${NumeroDoAlvo}`)
-try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${NumeroDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfNumero = `
+console.log(`~> Consultando o telefone: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
-console.log("tentando na api2")
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell2?query=${NumeroDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfNumero = `
+reply(`⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!`)
+}
+break
+
+case 'tell2':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} numerodoalvo`)
+getQuery = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o telefone: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell2?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfNumero}, {quoted: info})
-}
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
 } else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
+} catch(err) {
+console.log(err)
+reply(`⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!`)
+}
+break
+
+case 'score':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
+getQuery = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o score: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/score?query=${getQuery}&token=spr`)
+let Dadoskkj = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
 
 ${NomeDoBot}
-`)
+`
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
 }
-break
-
-case 'limpar':
-if(!isGroup) return reply(enviar.msg.grupo)
-if(!isGroupAdmins) return reply(enviar.msg.adm)
-clear = `🗑️\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n🗑️\n❲❗❳ *Lɪᴍᴘᴇᴢᴀ ᴅᴇ Cʜᴀᴛ Cᴏɴᴄʟᴜɪ́ᴅᴀ* ✅`
-lz.sendMessage(from, {text: clear}, {quoted: info, contextInfo : { forwardingScore: 500, isForwarded:true}})
-break
-
-case 'totag':
-case 'cita':
-case 'hidetag':
-if(!isGroup) return reply('Este comando só deve ser utilizado em Grupo.')
-if(!isOwner2) return reply('Você precisa ser DONO pra utilizar este comando')
-membros = (groupId, membros1) => {
-array = []
-for (let i = 0; i < membros1.length; i++) {
-array.push(membros1[i].id)
+} catch(err) {
+console.log(err)
+reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
 }
-return array
-}
-var yd = membros(from, groupMembers)
-if(q.length < 1) return reply('Citar oq?')
-lz.sendMessage(from, {text: body.slice(command.length + 2), mentions: yd})
 break
 
 case 'placa':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-if (!q) return reply(`exemplo: ${prefix+command} placadocarrodoalvo`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-PlacaDoAlvo = args.join(" ")
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 7 || q.length > 7) return reply(`➥ INSIRA UMA PLACA VALIDA.`)
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} placadocarro`)
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando a placa: ${PlacaDoAlvo}`)
-try {
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${PlacaDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfPlaca = `
+console.log(`~> Consultando o NOME: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfPlaca}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
-getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa2?query=${PlacaDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-DadosOfPlaca = `
+reply(`⚠️ PLACA NÃO ENCONTRADA / INVALIDA!`)
+}
+break
+
+case 'placa2':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 7 || q.length > 7) return reply(`➥ INSIRA UMA PLACA VALIDA.`)
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} placadocarro`)
+getQuery = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o NOME: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa2?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfPlaca}, {quoted: info})
-}
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
 } else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
+} catch(err) {
+console.log(err)
+reply(`⚠️ PLACA NÃO ENCONTRADA / INVALIDA!`)
 }
 break
 
 case 'cnpj':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-if (!q) return reply(`exemplo: ${prefix+command} cnpj do alvo`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-CnpjDoAlvo = args.join(" ")
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} cnpj da empresa`)
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
-.split('/').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o cnpj: ${CnpjDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${CnpjDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-let DadosOfCnpj = `
+console.log(`~> Consultando o cnpj: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCnpj}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CNPJ NÃO ENCONTRADO / INVALIDO!`)
-}
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
 }
 break
 
 case 'cnpj2':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-if (!q) return reply(`exemplo: ${prefix+command} cnpj do alvo`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-CnpjDoAlvo = args.join(" ")
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} cnpj da empresa`)
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
-.split('/').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando o cnpj: ${CnpjDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj2?query=${CnpjDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-let DadosOfCnpj = `
+console.log(`~> Consultando o cnpj: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj2?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfCnpj}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CNPJ NÃO ENCONTRADO / INVALIDO!`)
 }
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
-
-${NomeDoBot}
-`)
-}
 break
 
 case 'bin':
-infoOfUser = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas.json`))
-if (infoOfUser.system == "online") {
-if (!isGroup) return reply(`as consultas estao disponiveis apenas para grupos!
-
-Entre No Grupo Do Bot Para Usar:
-https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV`)
-if (!q) return reply(`exemplo: ${prefix+command} bin`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-BinDoAlvo = args.join(" ")
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} bindobanco`)
+getQuery = args.join(" ")
 .split('+').join('')
 .split('-').join('')
 .split(' ').join('')
-.split('/').join('')
 .split('.').join('')
 .split('(').join('')
 .split(')').join('');
-console.log(`~> Consultando a bin: ${BinDoAlvo}`)
-try {
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${BinDoAlvo}&token=spr`)
-imageCS = await getBuffer(fotoconsultas)
-let DadosOfBin = `
+console.log(`~> Consultando a bin: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${getQuery}&token=spr`)
+let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
 > Usuario: ${pushname}
 
 ${NomeDoBot}
 `
-lz.sendMessage(from, {image: imageCS, caption: DadosOfBin}, {quoted: info})
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
 } catch(err) {
 console.log(err)
-reply(`⚠️ BIN NÃO ENCONTRADA / INVALIDO!`)
+reply(`⚠️ BIN NÃO ENCONTRADA / INVALIDA!`)
 }
-} else {
-reply(`CONSULTAS OFFLINE
-Motivo: ${infoOfUser.motivo}
+break
+
+case 'cep':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} cepdoalvo`)
+getQuery = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o cep: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${getQuery}&token=spr`)
+let Dadoskkj = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
 
 ${NomeDoBot}
-`)
+`
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
+} catch(err) {
+console.log(err)
+reply(`⚠️ CEP NÃO ENCONTRADO / INVALIDO!`)
 }
 break
 
 case 'menu':
-reply(infotxt)
+SendButtonIMG(from, ftdobot, infotxt, NomeDoBot, [
+{buttonId: `${prefix}linkgp`, buttonText: {displayText: `🌠 Link Do Grupo 🌠`}, type: 1}], info)
 break
 
 case 'donodobot':
