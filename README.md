@@ -1,4 +1,4 @@
-# </Infinity Bot V5/>
+# </iFenix Pro Robot V1/>
 <div align="center">
 </div>
 <p align="center">
@@ -12,31 +12,27 @@
 
 Um bot simples para whatsapp que está em desenvolvimento.
 ```bash
----------- Novidades Da V5 ----------
+---------- Novidades ----------
     
-[- 4 Novos Comando -]
-- anti ligações [ .anticall on ]
-- anti pv [ .antipv on ]
-- perfil [ .perfil ]
-- linkgp [ .linkgp ]
-- Mudar o Prefixo Com Comando [ .prefix / ]
-    
-[- Correçoes -]
-- Plays Arrumados!!
-- attp arrumado
-- consultas arrumadas
-E diversas correções em vários comandos ksksks passei dando uma olhada em quase todos!
-
-em breve a v6 com varios novos comandos :)
+- CPF
+- CPF2
+- CPF3
+- CPF4
+- TELEFONE
+- CNPJ
+- SCORE
+- BIN
+- CEP
+- NOME
 ```
    
 ----------- Para Duvidas -----------
     
 caso duvidas entre em contato! ( Clique Em Cima )
     
-- [Meu Grupo (Para Duvidas & Usar os Bots De La) Entrae :)](https://chat.whatsapp.com/DPZKtPOZvUBIsaluTNB5rh)
+- [Meu Grupo (Para Duvidas & Noticias Sobre o Bot Ou Quiser Consultar La) Entrae :)](https://chat.whatsapp.com/KkVjOHpv9vWDCOyc5VZWVV)
     
-- [Meu Zap](https://wa.me/556284944742)
+- [Meu Zap](https://wa.me/5562991514026)
 
 ----------- Area De Downloads -----------
     
