@@ -1,7 +1,7 @@
 {
-  "name": "infi",
+  "name": "ifenix_pro_robot_by_bylzmods",
   "version": "1.0.0",
-  "description": "Infinity Bot MD 1.0 - By LZ MODS OFICIAL",
+  "description": "iFenix Bot MD 1.0 - By LZ MODS OFICIAL",
   "main": "index.js",
   "directories": {
     "lib": "lib"
@@ -17,7 +17,7 @@
     "whatsapp",
     "bot"
   ],
-  "author": "jerfinho",
+  "author": "lzmods",
   "dependencies": {
     "@adiwajshing/baileys": "4.4.0",
     "@adiwajshing/keyed-db": "^0.2.4",

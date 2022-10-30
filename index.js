@@ -1,20 +1,30 @@
-const { //kkk
-default: WAConnection,
-MessageType,
-Presence,
-GroupSettingChange,
-WA_MESSAGE_STUB_TYPES,
-Mimetype,
-relayWAMessage,
-makeInMemoryStore,
-useSingleFileAuthState,
-MessageRetryMap,
-BufferJSON, 
-DisconnectReason, 
-fetchLatestBaileysVersion,
-downloadContentFromMessage,
-delay
-} = require("@adiwajshing/baileys")
+const { //BY LZ MODS OFICIAL
+default: WAConnection, //BY LZ MODS OFICIAL
+MessageType, //BY LZ MODS OFICIAL
+Presence, //BY LZ MODS OFICIAL
+GroupSettingChange, //BY LZ MODS OFICIAL
+WA_MESSAGE_STUB_TYPES, //BY LZ MODS OFICIAL
+Mimetype, //BY LZ MODS OFICIAL
+relayWAMessage, //BY LZ MODS OFICIAL
+makeInMemoryStore, //BY LZ MODS OFICIAL
+useSingleFileAuthState, //BY LZ MODS OFICIAL
+MessageRetryMap, //BY LZ MODS OFICIAL
+BufferJSON, //BY LZ MODS OFICIAL
+DisconnectReason, //BY LZ MODS OFICIAL
+fetchLatestBaileysVersion, //BY LZ MODS OFICIAL
+downloadContentFromMessage, //BY LZ MODS OFICIAL
+delay //BY LZ MODS OFICIAL
+} = require("@adiwajshing/baileys") //BY LZ MODS OFICIAL
+
+
+// https://youtube.com/lzmodsofc
+// https://wa.me/5562991514026
+
+//SE FOR POSTAR DEIXA OS CREDITOS!!
+//BY LZ MODS OFICIAL
+//https://github.com/lzmodsoficial/iFenixProRobot
+
+
 const fs = require("fs")
 const chalk = require("chalk")
 const P = require("pino") 
@@ -45,10 +55,6 @@ const speed = require("performance-now")
 const { color } = require("./~ iFenixDatab ~/funçoes/color")
 const { fromBuffer } = require("file-type")
 const { banner, banner2, convertSticker, getExtension, getRandom } = require("./~ iFenixDatab ~/funçoes/functions")
-
-let fotoConsultaDeCpf = "https://telegra.ph/file/c8bbb2f5456ccfdc91995.jpg"
-let fotoConsultaDeCpf2 = "https://telegra.ph/file/20359c436cb3b3f3f642b.png"
-let fotoConsultaDeScore = "https://telegra.ph/file/1e80e777b4b33789b7602.jpg"
 
 let fotododono = "https://telegra.ph/file/1ca3283d208cdbffc9c61.jpg"
 var base64ToImage = require('base64-to-image');
@@ -89,9 +95,6 @@ let prefix = dono.prefix
 
 // ====== || Const's - Menu's || ====== \\
 
-const { MenuPrincipal } = require('./menus/menuprincipal.js');
-
-const { infodono } = require('./menus/infodono')
 const { resolve } = require("path")
 const { StringDecoder } = require("string_decoder")
 
@@ -131,7 +134,7 @@ startBot()
 
 } else if(connection === "open") {
 console.log(chalk.blue("Bot Conectado ao Whatsapp Com Sucesso!"))
-console.log(chalk.red(""), chalk.keyword("white")("( Sistema )"), chalk.green("iFenix - MD Versao [1.0]"))
+console.log(chalk.red(""), chalk.keyword("white")("( Sistema )"), chalk.green("Qualquer Bug Favor Reportar Ao CEO > +55 (62) 991514-026"))
 }
 })
 
@@ -274,19 +277,13 @@ Dados Reais e Atualizados Diretamente De Bases Oficiais!
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}telefone 21971268721
 ━━━━━━━━━━━━━━━━━━
-[+] ${prefix}telefone2 21971268721
-━━━━━━━━━━━━━━━━━━
 [+] ${prefix}cnpj 27865757000102
-━━━━━━━━━━━━━━━━━━
-[+] ${prefix}cnpj2 27865757000102
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}cep 75255681
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}nome Tania Mara Moyses
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}placa OGT0458
-━━━━━━━━━━━━━━━━━━
-[+] ${prefix}placa2 OGT0458
 ━━━━━━━━━━━━━━━━━━
 [+] ${prefix}bin 498408
 ━━━━━━━━━━━━━━━━━
@@ -498,107 +495,9 @@ switch (command) {
 
 // ====== || Menus || ====== \\
 
-case 'usuarios-api':
-if (!isOwner2) return reply("comando apenas pro meu dono")
-getUsersOfSystm = await fetchJson("https://ifenix-api.tk/admin/listadeusuarios")
-let infoUsers = `┌ ◪ *[+] iFenix - Rest Api's [+]*
-└ *Total De Usuarios:* ${getUsersOfSystm.info.length}\n\n`
-for(var i = 0; i < getUsersOfSystm.info.length; i++) {
-infoUsers += `───────────────\n
-┌ ❏ *Nome De Usuario:* ${getUsersOfSystm.info[i].nome}
- ❏ *Token:* ${getUsersOfSystm.info[i].token}
-└ ❏ *Limit Do Token:* ${getUsersOfSystm.info[i].limit}\n\n`
-}
-reply(infoUsers)
-break
-
-case 'adduser-api':
-try {
-if (!isOwner2) return reply("comando apenas pro meu dono")
-textin = args.join(" ")
-txt1 = textin.split("/")[0];
-txt2 = textin.split("/")[1];
-txt3 = textin.split("/")[2];
-if (!textin) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
-if (!txt1) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
-if (!txt2) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
-if (!txt3) return reply(`formato: ${prefix+command} nomedousuario/nomedotoken/limitdotoken`)
-createUser = await fetchJson(`https://ifenix-api.tk/admin/adduser?nomeuser=${txt1}&tokenuser=${txt2}&limituser=${txt3}`)
-reply("USUARIO ADICIONADO AO BANCO DE DADOS COM SUCESSO!")
-getUsersOfSystm = await fetchJson("https://ifenix-api.tk/admin/listadeusuarios")
-let infoUsers = `┌ ◪ *[+] iFenix - Rest Api's [+]*
-└ *Total De Usuarios:* ${getUsersOfSystm.info.length}\n\n`
-for(var i = 0; i < getUsersOfSystm.info.length; i++) {
-infoUsers += `───────────────\n
-┌ ❏ *Nome De Usuario:* ${getUsersOfSystm.info[i].nome}
- ❏ *Token:* ${getUsersOfSystm.info[i].token}
-└ ❏ *Limit Do Token:* ${getUsersOfSystm.info[i].limit}\n\n`
-}
-reply(infoUsers)
-} catch(err) {
-console.log(err)
-reply("erro no servidor.")
-}
-break
-
-case 'deluser-api':
-try {
-if (!isOwner2) return reply("comando apenas pro meu dono")
-if (!q) return reply(`formato: ${prefix+command} nomedotoken`)
-deleteUser = await fetchJson(`https://ifenix-api.tk/admin/deluser?tokenuser=${q}`)
-reply("USUARIO DELETADO DO BANCO DE DADOS COM SUCESSO!")
-getUsersOfSystm = await fetchJson("https://ifenix-api.tk/admin/listadeusuarios")
-let infoUsers = `┌ ◪ *[+] iFenix - Rest Api's [+]*
-└ *Total De Usuarios:* ${getUsersOfSystm.info.length}\n\n`
-for(var i = 0; i < getUsersOfSystm.info.length; i++) {
-infoUsers += `───────────────\n
-┌ ❏ *Nome De Usuario:* ${getUsersOfSystm.info[i].nome}
- ❏ *Token:* ${getUsersOfSystm.info[i].token}
-└ ❏ *Limit Do Token:* ${getUsersOfSystm.info[i].limit}\n\n`
-}
-reply(infoUsers)
-} catch(err) {
-console.log(err)
-reply("erro no servidor.")
-}
-break
-
-case 'consultas_config':
-if (!isOwner2) return reply("apenas pro dono")
-let foto_csf = "https://telegra.ph/file/328c829f6921cdc720366.jpg"
-let txt = `Escolha Entre As Opçoes Abaixo Para Continuar.`
-SendButtonIMG(from, foto_csf, txt, NomeDoBot, [
-{buttonId: `${prefix}cs_on`, buttonText: {displayText: `❬ ✔ ❭ Ativar Consultas ❬ ✔ ❭`}, type: 1},
-{buttonId: `${prefix}cs_off`, buttonText: {displayText: `❬ X ❭ Desativar Consultas ❬ X ❭`}, type: 1}], info)
-break
-
-case 'cs_off':
-if (!isOwner2) return reply("apenas pro dono")
-let motivo = `Fazendo Manutençoes Ou Desativada Temporariamente.\n\nQuer Consultas Sem Limitaçoes?\nDigite: ${prefix}menu e Adiquira Ja Um PLano!`
-escrever_no_json = {
-system: "offline",
-motivo: motivo
-}
-fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`, JSON.stringify(escrever_no_json, null, 2))
-reply("ok")
-break
-
-case 'cs_on':
-if (!isOwner2) return reply("apenas pro dono")
-let mtv = `ON!`
-escrever_no_json = {
-system: "online",
-motivo: mtv
-}
-fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`, JSON.stringify(escrever_no_json, null, 2))
-reply("ok")
-break
-
 case 'cpf':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -610,7 +509,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o cpf: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -619,22 +518,45 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
-} catch(err) {
-console.log(err)
-reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
+} catch {
+SendButtonIMG(from, FotosRandomicas_CS, "⚠️ cpf NÃO ENCONTRADO / INVALIDO!", NomeDoBot, [
+{buttonId: `${prefix}cpf_i ${q}`, buttonText: {displayText: `❬ 🌠 ❭ Busca Avançada ❬ 🌠 ❭`}, type: 1}], info)
 }
 break
+
+case 'cpf_i':
+try {
+if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
+if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
+getQuery = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split(' ').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o cpf: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`http://consultar-na-ifind-bylzmods.herokuapp.com/cpf?query=${getQuery}&token=22_na_urna`)
+let Dadoskkj = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} catch(err) {
+console.log(err)
+reply("⚠️ cpf NÃO ENCONTRADO / INVALIDO!")
+}
+break
+
 
 case 'cpf4':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -646,7 +568,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o cpf: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf4?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf4?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -655,11 +577,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
@@ -668,9 +585,7 @@ break
 
 case 'cpf2':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -682,7 +597,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o cpf: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf2?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf2?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -691,11 +606,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
@@ -704,9 +614,7 @@ break
 
 case 'cpf3':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -718,7 +626,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o cpf: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cpf3?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -727,11 +635,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
@@ -740,9 +643,7 @@ break
 
 case 'nome':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 20) return reply(`➥ INSIRA UM NOME COMPLETO.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} nomedoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -753,7 +654,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o NOME: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 let imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -762,11 +663,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch {
 SendButtonIMG(from, FotosRandomicas_CS, "⚠️ NOME NÃO ENCONTRADO / INVALIDO!", NomeDoBot, [
 {buttonId: `${prefix}nome_i ${q}`, buttonText: {displayText: `❬ 🌠 ❭ Busca Avançada ❬ 🌠 ❭`}, type: 1}], info)
@@ -775,9 +671,7 @@ break
 
 case 'nome_i':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 20) return reply(`➥ INSIRA UM NOME COMPLETO.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} nomedoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -788,7 +682,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o NOME: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://consultar-na-ifind-bylzmods.herokuapp.com/nome?query=${getQuery}&token=24horas`)
+let getResultsOfApi = await fetchJson(`https://consultar-na-ifind-bylzmods.herokuapp.com/nome?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -797,11 +691,7 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
+
 } catch(err) {
 console.log(err)
 reply("⚠️ NOME NÃO ENCONTRADO / INVALIDO!")
@@ -812,9 +702,7 @@ case 'tell':
 case 'telefone':
 case 'tel':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} numerodoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -826,7 +714,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o telefone: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -835,11 +723,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 SendButtonIMG(from, FotosRandomicas_CS, "⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!", NomeDoBot, [
@@ -849,9 +732,7 @@ break
 
 case 'tell_i':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} nomedoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -862,7 +743,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o NOME: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://consultar-na-ifind-bylzmods.herokuapp.com/tell?query=${getQuery}&token=24horas`)
+let getResultsOfApi = await fetchJson(`https://consultar-na-ifind-bylzmods.herokuapp.com/tell?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -871,60 +752,15 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply("⚠️ NOME NÃO ENCONTRADO / INVALIDO!")
 }
 break
 
-case 'tell2':
-case 'telefone2':
-case 'tel2':
-try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
-if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
-if (!q) return reply(`exemplo: ${prefix+command} numerodoalvo`)
-getQuery = args.join(" ")
-.split('+').join('')
-.split('-').join('')
-.split(' ').join('')
-.split('.').join('')
-.split('(').join('')
-.split(')').join('');
-console.log(`~> Consultando o telefone: ${getQuery}`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/tell2?query=${getQuery}&token=spr`)
-let Dadoskkj = `
-${getResultsOfApi.resultado.dados}
-
-> Usuario: ${pushname}
-
-${NomeDoBot}
-`
-lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
-} catch(err) {
-console.log(err)
-reply(`⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!`)
-}
-break
-
 case 'score':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 11 || q.length > 11) return reply(`➥ CPF INVALIDO! INSIRA UM COM 11 DIGITOS.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cpfdoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -936,7 +772,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o score: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/score?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/score?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -945,11 +781,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CPF NÃO ENCONTRADO / INVALIDO!`)
@@ -958,9 +789,7 @@ break
 
 case 'placa':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 7 || q.length > 7) return reply(`➥ INSIRA UMA PLACA VALIDA.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} placadocarro`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -972,7 +801,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o NOME: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -981,22 +810,15 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
-} catch(err) {
-console.log(err)
-reply(`⚠️ PLACA NÃO ENCONTRADA / INVALIDA!`)
+} catch {
+SendButtonIMG(from, FotosRandomicas_CS, "⚠️ PLACA NÃO ENCONTRADA / INVALIDA!", NomeDoBot, [
+{buttonId: `${prefix}placa_i ${q}`, buttonText: {displayText: `❬ 🌠 ❭ Busca Avançada ❬ 🌠 ❭`}, type: 1}], info)
 }
 break
 
-case 'placa2':
+case 'placa_i':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
 if (q.length < 7 || q.length > 7) return reply(`➥ INSIRA UMA PLACA VALIDA.`)
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} placadocarro`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -1008,7 +830,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o NOME: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/detran/placa2?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`http://consultar-na-ifind-bylzmods.herokuapp.com/placa?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -1017,21 +839,14 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
-reply(`⚠️ PLACA NÃO ENCONTRADA / INVALIDA!`)
+reply("⚠️ PLACA NÃO ENCONTRADA / INVALIDA!")
 }
 break
 
 case 'cnpj':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cnpj da empresa`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -1043,7 +858,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o cnpj: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -1052,46 +867,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
-} catch(err) {
-console.log(err)
-reply(`⚠️ CNPJ NÃO ENCONTRADO / INVALIDO!`)
-}
-break
-
-case 'cnpj2':
-try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
-if (infoSystem.system == "online") {
-if (!q) return reply(`exemplo: ${prefix+command} cnpj da empresa`)
-getQuery = args.join(" ")
-.split('+').join('')
-.split('-').join('')
-.split(' ').join('')
-.split('.').join('')
-.split('(').join('')
-.split(')').join('');
-console.log(`~> Consultando o cnpj: ${getQuery}`)
-reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cnpj2?query=${getQuery}&token=spr`)
-let Dadoskkj = `
-${getResultsOfApi.resultado.dados}
-
-> Usuario: ${pushname}
-
-${NomeDoBot}
-`
-lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CNPJ NÃO ENCONTRADO / INVALIDO!`)
@@ -1100,8 +875,6 @@ break
 
 case 'bin':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} bindobanco`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -1113,7 +886,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando a bin: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/bin?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -1122,11 +895,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply(`⚠️ BIN NÃO ENCONTRADA / INVALIDA!`)
@@ -1135,8 +903,6 @@ break
 
 case 'cep':
 try {
-infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
-if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} cepdoalvo`)
 getQuery = args.join(" ")
 .split('+').join('')
@@ -1148,7 +914,7 @@ getQuery = args.join(" ")
 console.log(`~> Consultando o cep: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
 imageCS = await getBuffer(FotosRandomicas_CS)
-let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${getQuery}&token=spr`)
+let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/cep?query=${getQuery}&token=22_na_urna`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -1157,11 +923,6 @@ ${getResultsOfApi.resultado.dados}
 ${NomeDoBot}
 `
 lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
-} else {
-let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
-SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
-{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
-}
 } catch(err) {
 console.log(err)
 reply(`⚠️ CEP NÃO ENCONTRADO / INVALIDO!`)
@@ -1196,82 +957,6 @@ reply(`࿐ Link do grupo :\nhttps://chat.whatsapp.com/${linkk} `)
 break
 
 // ====== || Stickers || ====== \\
-case 's2':
-case 'sticker2':
-try {
-buff = await getFileBuffer(info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage, "image")
-fs.writeFileSync('./lzmods.webp', buff)
-site = fs.readFileSync('./lzmods.webp')
-bass64 = `data:image/jpeg;base64,${site.toString('base64')}`
-mantap = await convertSticker(bass64, "By LZ", `📍 Figurinha Criada Por ${NomeDoBot}`)
-imageBuffer = new Buffer.from(mantap, 'base64');
-lz.sendMessage(from, {sticker: imageBuffer}, {quoted: info})
-fs.unlinkSync('./lzmods.webp')
-} catch {
-reply("error 404")
-}
-break
-
-case 's':
-case 'sticker':
-case 'figurinha':
-case 'figu':
-reply(enviar.espere)
-try {
-if ((isMedia && !info.message.videoMessage || isQuotedImage) && args.length == 0) {
-ImagemMarcada = await getFileBuffer(info.message.extendedTextMessage.contextInfo.quotedMessage.imageMessage, "image")
-rane = getRandom('.'+await getExtension(ImagemMarcada.mimetype))
-fs.writeFileSync(rane, ImagemMarcada)
-const media = rn
-rano = getRandom('.webp')
-exec(`ffmpeg -i ${media} -vcodec libwebp -filter:v fps=fps=15 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 800:800 ${rano}`, (err) => {
-fs.unlinkSync(media)
-buffer = fs.readFileSync(rano)
-lz.sendMessage(from, {sticker: buffer}, {quoted: info})
-fs.unlinkSync(rano)
-})
-} else if ((isMedia && info.message.videoMessage.seconds < 11 || isQuotedVideo && info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 10) && args.length == 0) {
-const buff = isQuotedVideo ? info.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage : info.message.videoMessage
-rane = getRandom('.'+await getExtension(buff.mimetype))
-buffimg = await getFileBuffer(buff, 'video')
-fs.writeFileSync(rane, buffimg)
-const media = rane
-rano = getRandom('.webp')
- exec(`ffmpeg -i ${media} -vcodec libwebp -filter:v fps=fps=15 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 200:200 ${rano}`, (err) => {
-fs.unlinkSync(media)
-buffer = fs.readFileSync(rano)
-lz.sendMessage(from, {sticker: buffer}, {quoted: info})
-fs.unlinkSync(rano)
- })
-} else {
-reply("apenas videos com no maximo 10 segundos sao suportados.")
-}
-} catch(e) {
-console.log(e)
-reply('error 404')
-}
-break
-
-case 'attp':
-sticker = args.join(' ')
-if(!sticker) return reply(`*❗ Modo Certo: ${prefix + comando} Infinity Bot ❗*`)
-reply(enviar.espere)
-url = encodeURI(`https://api.xteam.xyz/attp?file&text=${q}`)
-attp = await getBuffer(url)
-lz.sendMessage(from, {sticker: attp}, {quoted: doc})
-break
-
-case "toimg":
-if (!isQuotedSticker) return reply("࿐ Marca uma fig ")
-buff = await getFileBuffer(info.message.extendedTextMessage.contextInfo.quotedMessage.stickerMessage, "image")
-reply(enviar.espere)
-try {
-lz.sendMessage(from, {image: buff}, {quoted: live})
-} catch(e) {
-console.log(e)
-reply(enviar.erro)
-}
-break
 
 case "ban":
 if (!isGroup) return reply(enviar.grupo)
@@ -1316,42 +1001,6 @@ lz.groupParticipantsUpdate(from, [mentioned2], "promote")
 }
 break
 
-case 'nomegp':
-if (!isGroup) return reply(enviar.grupo)
-if (!groupAdmins) return reply(enviar.adm)
-if (!isBotGroupAdmins) return reply(enviar.botadm)
-getname = args.join(" ")
-nomedogrupo = groupName
-let anotar_no_json = {nomedogrupo}
-fs.writeFileSync(`./~ iFenixDatab ~/funçoes/temp/dados_group-${from}.json`, JSON.stringify(anotar_no_json))
-lz.groupUpdateSubject(from, `${getname}`)
-const botoess = [{buttonId: `${prefix}reverse_namegp`, buttonText: {displayText: '💥 Voltar Pro Nome Antigo 💥'}, type: 1}]
-const dadoskkk = {
-text: "Nome Do Grupo Alterado Com Sucesso",
-footer: NomeDoBot,
-buttons: botoess,
-headerType: 1}
-await lz.sendMessage(from, dadoskkk)
-break
-
-case 'reverse_namegp':
-if (!isGroup) return reply(enviar.grupo)
-if (!groupAdmins) return reply(enviar.adm)
-if (!isBotGroupAdmins) return reply(enviar.botadm)
-let acett = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/dados_group-${from}.json`))
-lz.groupUpdateSubject(from, `${acett.nomedogrupo}`)
-fs.unlinkSync(`./~ iFenixDatab ~/funçoes/temp/dados_group-${from}.json`)
-break
-
-case 'descgp':
-if (!isGroup) return reply(enviar.grupo)
-if (!groupAdmins) return reply(enviar.adm)
-if (!isBotGroupAdmins) return reply(enviar.botadm)
-getdesc = args.join(" ")
-lz.groupUpdateDescription(from, `${getdesc}`)
-lz.sendMessage(from, {text: 'Descrição do grupo alterada com sucesso!'}, {quoted: info})
-break
-
 case "demote":
 case "tiraradm":
 case "katiau":
@@ -1368,44 +1017,6 @@ if(q.length > 15) return reply('Só pode promover uma pessoa por vez..')
 mentioned2 = args.join(" ").replace("@", "") + "@s.whatsapp.net"
 lz.sendMessage(from, {text: `@${mentioned2.split("@")[0]} Foi despromovido(a) a ADM com sucesso.`, mentions: [mentioned2]})
 lz.groupParticipantsUpdate(from, [mentioned2], "demote")
-}
-break
-
-case "ping":
-reply(`࿐ Velocidade de resposta ${latensi.toFixed(4)} segundos `)
-break
-
-case "gplink":
-if (!isGroup) return reply(enviar.grupo)
-if (!groupAdmins) return reply(enviar.adm)
-if (!isBotGroupAdmins) return reply(enviar.botadm)
-const link = await lz.groupInviteCode(from)
-reply(`࿐ Link do grupo : https://chat.whatsapp.com/${link} `)
-break
-
-case "resetarlink":
-if (!isGroup) return reply(enviar.grupo)
-if (!groupAdmins) return reply(enviar.adm)
-if (!isBotGroupAdmins) return reply(enviar.botadm)
-try {
-await lz.groupRevokeInvite(from)
-reply("࿐ Link de convite resetado com sucesso ✓ ")
-} catch(e) {
-console.log(e)
-reply(enviar.erro)
-}
-break
-
-case "sair":
-if (!isGroup) return reply(enviar.grupo)
-if (!groupAdmins) return reply(enviar.adm)
-reply("ok...me desculpe se eu nao pude ajudá-lo(a) com o que vc precisava....adeus😔")
-await delay(1000)
-try {
-await lz.groupLeave(from)
-} catch(e) {
-console.log(e)
-reply(enviar.erro)
 }
 break
 
@@ -1439,54 +1050,6 @@ reply(`࿐ ${q} Foi rebaixado a membro comum com sucesso `)
 } catch(e) {
 console.log(e)
 reply(enviar.erro)
-}
-break
-case "grupo":
-if (!isGroup) return reply(enviar.grupo)
-if (!groupAdmins) return reply(enviar.adm)
-if (!isBotGroupAdmins) return reply(enviar.botadm)
-try {
-if (q == "a") {
-await lz.groupSettingUpdate(from, "not_announcement")
-reply("࿐ Grupo aberto com sucesso")
-}
-if (q == "f") {
-await lz.groupSettingUpdate(from, "announcement")
-reply("࿐ Grupo fechado com sucesso ")
-}
-} catch(e) {
-console.log(e)
-reply(enviar.erro)
-}
-break
-
-case 'listadm':
-if (!isGroup) return reply(enviar.grupo)
-teks = `List admin of group *${groupMetadata.subject}*\nTotal : ${groupAdmins.length}\n\n`
-no = 0
-for (let admon of groupAdmins) {
-no += 1
-teks += `[${no.toString()}] @${admon.split('@')[0]}\n`
-}
-mentions(teks, groupAdmins, true)
-break
-
-case 'antilink':
-if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
-if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-if (args.length < 1) return reply('digite 1 para ativar ')
-if (Number(args[0]) === 1) {
-if (isAntiLink) return reply('o anti-link está ativo')
-antilink.push(from)
-fs.writeFileSync('./src/antilink.json', JSON.stringify(antilink))
-reply('O anti-link foi ativo no grupo ✔️')
-} else if (Number(args[0]) === 0) {
-antilink.splice(from, 1)
-fs.writeFileSync('./src/antilink.json', JSON.stringify(antilink))
-reply('O anti-link foi desativado com sucesso neste grupo✔️')
-} else {
-reply('1 para ativar, 0 para desativar ')
 }
 break
 
