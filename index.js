@@ -850,7 +850,7 @@ break
 case 'tell_i':
 try {
 infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
-if (q.length < 20) return reply(`➥ INSIRA UM NOME COMPLETO.`)
+if (q.length < 11 || q.length > 11) return reply(`➥ INSIRA UM NUMERO COM 11 DIGITOS.`)
 if (infoSystem.system == "online") {
 if (!q) return reply(`exemplo: ${prefix+command} nomedoalvo`)
 getQuery = args.join(" ")
