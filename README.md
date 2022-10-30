@@ -7,7 +7,7 @@
 
 </div>
 <p align="center">
-   <a href="https://github.com/lzmodsoficial/infinitybot"><img title="Infinity Bot" src="https://img.shields.io/badge/Infinity Bot-By LZ MODS-red.svg?style=for-the-badge&logo=github" /></a>
+   <a href="https://github.com/lzmodsoficial/infinitybot"><img title="iFenixProRobot" src="https://img.shields.io/badge/Infinity Bot-By LZ MODS-red.svg?style=for-the-badge&logo=github" /></a>
   <h4 align="center">
 
 Um bot simples para whatsapp que está em desenvolvimento.
