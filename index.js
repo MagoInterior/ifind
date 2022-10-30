@@ -752,8 +752,43 @@ getQuery = args.join(" ")
 .split(')').join('');
 console.log(`~> Consultando o NOME: ${getQuery}`)
 reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
-imageCS = await getBuffer(FotosRandomicas_CS)
+let imageCS = await getBuffer(FotosRandomicas_CS)
 let getResultsOfApi = await fetchJson(`https://ifenix-api.tk/nome?query=${getQuery}&token=spr`)
+let Dadoskkj = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
+} catch {
+SendButtonIMG(from, FotosRandomicas_CS, "⚠️ NOME NÃO ENCONTRADO / INVALIDO!", NomeDoBot, [
+{buttonId: `${prefix}nome_i ${q}`, buttonText: {displayText: `❬ 🌠 ❭ Busca Avançada ❬ 🌠 ❭`}, type: 1}], info)
+}
+break
+
+case 'nome_i':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 20) return reply(`➥ INSIRA UM NOME COMPLETO.`)
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} nomedoalvo`)
+getQuery = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o NOME: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://consultar-na-ifind-bylzmods.herokuapp.com/nome?query=${getQuery}&token=24horas`)
 let Dadoskkj = `
 ${getResultsOfApi.resultado.dados}
 
@@ -769,7 +804,7 @@ SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSy
 }
 } catch(err) {
 console.log(err)
-reply(`⚠️ NOME NÃO ENCONTRADO / INVALIDO!`)
+reply("⚠️ NOME NÃO ENCONTRADO / INVALIDO!")
 }
 break
 
@@ -807,7 +842,43 @@ SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSy
 }
 } catch(err) {
 console.log(err)
-reply(`⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!`)
+SendButtonIMG(from, FotosRandomicas_CS, "⚠️ TELEFONE NÃO ENCONTRADO / INVALIDO!", NomeDoBot, [
+{buttonId: `${prefix}tell_i ${q}`, buttonText: {displayText: `❬ 🌠 ❭ Busca Avançada ❬ 🌠 ❭`}, type: 1}], info)
+}
+break
+
+case 'tell_i':
+try {
+infoSystem = JSON.parse(fs.readFileSync(`./~ iFenixDatab ~/funçoes/temp/consultas_config.json`))
+if (q.length < 20) return reply(`➥ INSIRA UM NOME COMPLETO.`)
+if (infoSystem.system == "online") {
+if (!q) return reply(`exemplo: ${prefix+command} nomedoalvo`)
+getQuery = args.join(" ")
+.split('+').join('')
+.split('-').join('')
+.split('.').join('')
+.split('(').join('')
+.split(')').join('');
+console.log(`~> Consultando o NOME: ${getQuery}`)
+reply(`Aguarde ${pushname}, estou a procurar os dados do alvo em meu banco de dados...\n\nSe Demorar Mais De 1 Minuto Significa Que o Bot Nao Encontrou os Dados No Banco De Dados...`)
+imageCS = await getBuffer(FotosRandomicas_CS)
+let getResultsOfApi = await fetchJson(`https://consultar-na-ifind-bylzmods.herokuapp.com/tell?query=${getQuery}&token=24horas`)
+let Dadoskkj = `
+${getResultsOfApi.resultado.dados}
+
+> Usuario: ${pushname}
+
+${NomeDoBot}
+`
+lz.sendMessage(from, {image: imageCS, caption: Dadoskkj}, {quoted: info})
+} else {
+let ftCsOff = "https://telegra.ph/file/d9b6782a7f80362196c73.jpg"
+SendButtonIMG(from, ftCsOff, `[ - ] CONSULTAS OFFLINE [ - ]\n\nMotivo > ${infoSystem.motivo}`, NomeDoBot, [
+{buttonId: `${prefix}menu`, buttonText: {displayText: `❬ 🌠 ❭ Menu De Comandos ❬ 🌠 ❭`}, type: 1}], info)
+}
+} catch(err) {
+console.log(err)
+reply("⚠️ NOME NÃO ENCONTRADO / INVALIDO!")
 }
 break
 
