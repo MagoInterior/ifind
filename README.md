@@ -5,6 +5,9 @@
   <h4 align="center">
 <img src="https://telegra.ph/file/5c37fc576961f6b2642cd.jpg" alt="Infinity Bot V1.0" width="300" />
 
+
+
+
 </div>
 <p align="center">
    <a href="https://github.com/lzmodsoficial/infinitybot"><img title="iFenixProRobot" src="https://img.shields.io/badge/iFenixProRobot-By LZ MODS-red.svg?style=for-the-badge&logo=github" /></a>
