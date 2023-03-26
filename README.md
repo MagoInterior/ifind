@@ -5,6 +5,9 @@
   <h4 align="center">
 <img src="https://telegra.ph/file/5c37fc576961f6b2642cd.jpg" alt="Infinity Bot V1.0" width="300" />
 
+### `—◉ 🌌 ACTIVAR EN REPLIT 🌌`
+
+[![Run on Repl.it](https://repl.it/badge/github/MagoInterior/ifind)](https://repl.it/github/MagoInterior/ifind) 
 
 
 
